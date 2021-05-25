@@ -2531,6 +2531,82 @@ paths:
                           `status: Not Mapped`
                            core-data-type-reference: BIAN::DataTypesLibrary::CoreDataTypes::UNCEFACT::Binary
                            general-info: The external analysis report in any suitable form including selection filters where appropriate
+  # Coreless Zafin addition
+  /product-directory/product-directory-entry/salesandmarketing/consolidatedrates:
+    get:
+      tags:
+      - retrieve #Consolidated Loan Rate for product
+      summary: Consolidated Loan Rate for product
+      description: Returns rates for a customer
+      parameters:
+      - name: productCode
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: CL
+      - name: customerSegment
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: GOLD
+      - name: customerCohort
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: GRAD
+      - name: termInMonths
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "36"
+      - name: effectiveDate
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "20210315"
+      - name: loanAmount
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "25000"
+      responses:
+        "200":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+              examples:
+                "0":
+                  value: '{"productFeature":{"interestProductFeature":[{"interestType":"FIXED","interestRateType":"FIXED","interestRatePlan":{"ratePlanName":"Standard rate plan for Car Loan","ratePlanType":"Standard Rate Plan","ratePlan":{"code":"RP-CL","description":"Standard rate plan for Car Loan","standardRate":{"value":4.2,"unit":"PERCENTAGE"},"annualPercentageYield":{"value":4.2,"unit":"PERCENTAGE"}}},"interestProductFeatureModality":{"interestCalculationType":"SIMPLE","interestCalculationParameter":"12","interestCalculationDate":"20210409"}},{"interestType":"FIXED","interestRateType":"FIXED","interestRatePlan":{"ratePlanName":"Rate adjustment plan for Car Loan","ratePlanType":"Adjustment Rate Plan","ratePlan":{"code":"RAP-CL","description":"Rate adjustment plan for Car Loan","value":-0.5,"unit":"PERCENTAGE","adjustments":[{"code":"DI-CC","name":"Discount for Graduate","description":"Discount for Graduate Customers","value":-0.3,"unit":"PERCENTAGE"},{"code":"DI-GOLD","name":"Discount for GOLD customers","description":"Discount for GOLD customers","value":-0.2,"unit":"PERCENTAGE"}]}},"interestProductFeatureModality":{"interestCalculationType":"SIMPLE","interestCalculationParameter":"12","interestCalculationDate":"20210409"}},{"interestType":"FIXED","interestRateType":"FIXED","interestRatePlan":{"ratePlanType":"Final Rate Plan","ratePlan":{"annualPercentageYield":{"value":3.7,"unit":"PERCENTAGE"},"value":3.7,"unit":"PERCENTAGE"}},"interestProductFeatureModality":{"interestCalculationType":"SIMPLE","interestCalculationParameter":"12","interestCalculationDate":"20210409"}}]}}'
+        "404":
+          description: Application not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+              examples:
+                "0":
+                  value: '{"timestamp":"2021-05-17T13:18:10.510+00:00","message":"404 Not Found from POST https://demo-clientinnov-zrpe.zafindemo.com/zrpe/rs/rates/v2/loan/consolidatedrate/determine","description":"uri=/product-directory/product-directory-entry/salesandmarketing/consolidatedrates"}'
+  # Coreless Zafin addition
   /product-directory/{sd-reference-id}/product-directory-entry/{cr-reference-id}/servicing/registration:
     post:
       tags:
@@ -8241,3 +8317,73 @@ components:
             `status: Not Mapped`
              core-data-type-reference: BIAN::DataTypesLibrary::CoreDataTypes::UNCEFACT::Binary
              general-info: The external analysis report in any suitable form including selection filters where appropriate
+    # Coreless Zafin addition
+    inline_response_200_productFeature_interestRatePlan_ratePlan_standardRate:
+      type: object
+      properties:
+        unit:
+          type: string
+        value:
+          type: number
+    inline_response_200_productFeature_interestProductFeature:
+      type: object
+      properties:
+        interestRatePlan:
+          $ref: '#/components/schemas/inline_response_200_productFeature_interestRatePlan'
+        interestType:
+          type: string
+        interestRateType:
+          type: string
+        interestProductFeatureModality:
+          $ref: '#/components/schemas/inline_response_200_productFeature_interestProductFeatureModality'
+    inline_response_200_productFeature_interestRatePlan:
+      type: object
+      properties:
+        ratePlan:
+          $ref: '#/components/schemas/inline_response_200_productFeature_interestRatePlan_ratePlan'
+        ratePlanName:
+          type: string
+        ratePlanType:
+          type: string
+    inline_response_200_productFeature:
+      type: object
+      properties:
+        interestProductFeature:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_200_productFeature_interestProductFeature'
+    inline_response_200:
+      type: object
+      properties:
+        productFeature:
+          $ref: '#/components/schemas/inline_response_200_productFeature'
+    inline_response_200_productFeature_interestRatePlan_ratePlan:
+      type: object
+      properties:
+        standardRate:
+          $ref: '#/components/schemas/inline_response_200_productFeature_interestRatePlan_ratePlan_standardRate'
+        annualPercentageYield:
+          $ref: '#/components/schemas/inline_response_200_productFeature_interestRatePlan_ratePlan_standardRate'
+        code:
+          type: string
+        description:
+          type: string
+    inline_response_200_productFeature_interestProductFeatureModality:
+      type: object
+      properties:
+        interestCalculationParameter:
+          type: string
+        interestCalculationDate:
+          type: string
+        interestCalculationType:
+          type: string
+    inline_response_404:
+      type: object
+      properties:
+        description:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+    # Coreless Zafin addition
